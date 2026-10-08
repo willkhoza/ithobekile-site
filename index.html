@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marito Translation Models | Ithobekile</title>
+<meta name="description" content="Marito translates textbooks, exam papers and curriculum documents into Sepedi, Sesotho, Setswana, Tshivenḓa and Xitsonga, ready for a language editor's proofreading pass.">
+<meta name="theme-color" content="#0B1426">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F5F7FB;
+  --surface:#FFFFFF;
+  --night:#0B1426;
+  --night-2:#14223F;
+  --ink:#0B1426;
+  --muted:#5B6781;
+  --line:#DDE3EE;
+  --cobalt:#3556FF;
+  --cobalt-deep:#2440D6;
+  --mint:#2FD4B4;
+  --sun:#FFC247;
+  --display:"Bricolage Grotesque","Instrument Sans",system-ui,sans-serif;
+  --body:"Instrument Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:5rem}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:1.0625rem;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--cobalt-deep);text-underline-offset:3px}
+a:hover{color:var(--ink)}
+:focus-visible{outline:3px solid var(--sun);outline-offset:3px;border-radius:6px}
+.wrap{max-width:72rem;margin:0 auto;padding:0 1.25rem}
+.skip{position:absolute;left:-999px;top:0;background:var(--sun);color:var(--ink);padding:.75rem 1rem;z-index:30;font-weight:600}
+.skip:focus{left:0}
+h1,h2,h3{font-family:var(--display);margin:0;letter-spacing:-.02em}
+
+/* header */
+header.site{position:sticky;top:0;z-index:20;background:rgba(245,247,251,.82);backdrop-filter:saturate(1.4) blur(14px);-webkit-backdrop-filter:saturate(1.4) blur(14px);border-bottom:1px solid rgba(11,20,38,.08)}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem;height:4rem}
+.brand{font-family:var(--display);font-weight:800;font-size:1.2rem;color:var(--ink);text-decoration:none;display:flex;align-items:center;gap:.55rem;letter-spacing:-.02em}
+.brand i{width:1.55rem;height:1.55rem;border-radius:8px;background:linear-gradient(135deg,var(--cobalt),var(--mint));display:inline-block}
+.brand span{font-weight:500;color:var(--muted)}
+nav.main{display:flex;align-items:center;gap:1.6rem;font-size:.95rem;font-weight:500}
+nav.main a{color:var(--ink);text-decoration:none}
+nav.main a:hover{color:var(--cobalt)}
+.pill{display:inline-flex;align-items:center;font-weight:600;font-size:.95rem;border-radius:999px;padding:.6rem 1.15rem;text-decoration:none;background:var(--ink);color:#fff!important;transition:transform .15s ease,background .15s ease}
+.pill:hover{background:var(--cobalt);transform:translateY(-1px)}
+@media (max-width:48rem){nav.main a:not(.pill){display:none}}
+
+/* hero */
+.hero{padding:1rem 0 0}
+.hero-panel{background:radial-gradient(60rem 30rem at 85% -10%,rgba(53,86,255,.45),transparent 60%),radial-gradient(40rem 24rem at 0% 110%,rgba(47,212,180,.22),transparent 60%),var(--night);color:#fff;border-radius:32px;padding:clamp(2rem,5vw,4.5rem);display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(2rem,4vw,3.5rem);align-items:center;overflow:hidden}
+@media (max-width:62rem){.hero-panel{grid-template-columns:1fr}}
+.hero h1{font-size:clamp(2.4rem,5.4vw,4.1rem);line-height:1.02;font-weight:800;max-width:15ch}
+.hero .lede{font-size:clamp(1.05rem,1.8vw,1.25rem);color:#C7D1E6;max-width:34rem;margin:1.25rem 0 2rem}
+.cta{display:flex;gap:.75rem;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;font-weight:600;border-radius:999px;padding:.85rem 1.5rem;text-decoration:none;font-size:1rem;transition:transform .15s ease,background .15s ease,border-color .15s ease}
+.btn.primary{background:var(--mint);color:var(--night)}
+.btn.primary:hover{background:#fff;color:var(--night);transform:translateY(-1px)}
+.btn.line{border:1.5px solid rgba(255,255,255,.35);color:#fff}
+.btn.line:hover{border-color:#fff;background:rgba(255,255,255,.08);color:#fff}
+.hero .also{margin:1.75rem 0 0;font-size:.95rem;color:#93A2C2}
+
+/* language picker */
+.picker{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:24px;padding:1.1rem;backdrop-filter:blur(6px)}
+.tabs{display:flex;flex-wrap:wrap;gap:.45rem;margin:0 0 1rem;padding:0;list-style:none}
+.tabs button{font:inherit;font-size:.95rem;font-weight:600;color:#C7D1E6;background:transparent;border:1px solid rgba(255,255,255,.18);padding:.45rem .95rem;border-radius:999px;cursor:pointer;transition:all .15s ease}
+.tabs button:hover{color:#fff;border-color:rgba(255,255,255,.5)}
+.tabs button[aria-selected="true"]{background:#fff;color:var(--night);border-color:#fff}
+.panel-head{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;flex-wrap:wrap;margin-bottom:.9rem}
+.panel-head h2{font-size:clamp(1.8rem,3.4vw,2.5rem);font-weight:800}
+.panel-head code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.82rem;color:#93A2C2}
+.stat{display:grid;grid-template-columns:1fr auto;gap:.2rem .75rem;padding:.7rem 0;border-top:1px solid rgba(255,255,255,.12)}
+.stat dt{color:#C7D1E6;font-size:.95rem}
+.stat dd{margin:0;font-family:var(--display);font-weight:700;font-size:1.15rem;text-align:right}
+.bar{grid-column:1/-1;height:6px;border-radius:99px;background:rgba(255,255,255,.12);overflow:hidden}
+.bar b{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,var(--cobalt),var(--mint));transition:width .6s cubic-bezier(.2,.8,.2,1)}
+.pp-note{font-size:.85rem;color:#93A2C2;margin:.9rem 0 0}
+
+/* sections */
+section{padding:clamp(3.5rem,8vw,6rem) 0}
+.sec-head{max-width:44rem;margin-bottom:2.25rem}
+.sec-head h2{font-size:clamp(1.9rem,4vw,3rem);line-height:1.05;font-weight:800}
+.sec-head p{color:var(--muted);margin:1rem 0 0;font-size:1.1rem}
+
+/* bento */
+.bento{display:grid;grid-template-columns:repeat(6,1fr);gap:1rem}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:1.6rem}
+.tile h3{font-size:1.3rem;font-weight:700;margin-bottom:.45rem}
+.tile p{margin:0;color:var(--muted);font-size:1rem}
+.t-a{grid-column:span 3}
+.t-b{grid-column:span 3;background:var(--night);color:#fff;border-color:var(--night)}
+.t-b p{color:#C7D1E6}
+.t-c{grid-column:span 2}
+.t-d{grid-column:span 4;background:linear-gradient(135deg,#EAF0FF,#E6FBF6);border-color:#D5E1FA}
+@media (max-width:52rem){.t-a,.t-b,.t-c,.t-d{grid-column:span 6}}
+
+/* flow */
+.flow{list-style:none;counter-reset:s;margin:2rem 0 0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+@media (max-width:52rem){.flow{grid-template-columns:1fr}}
+.flow li{counter-increment:s;position:relative;padding:1.4rem 1.4rem 1.4rem 4rem;background:var(--surface);border:1px solid var(--line);border-radius:18px}
+.flow li::before{content:counter(s);position:absolute;left:1.2rem;top:1.25rem;width:2.1rem;height:2.1rem;border-radius:50%;background:var(--cobalt);color:#fff;font-family:var(--display);font-weight:700;display:grid;place-items:center}
+.flow h3{font-size:1.1rem;font-weight:700;margin-bottom:.25rem}
+.flow p{margin:0;color:var(--muted);font-size:.98rem}
+
+/* results */
+.results{background:var(--surface);border-block:1px solid var(--line)}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:2.5rem}
+@media (max-width:52rem){.kpis{grid-template-columns:1fr}}
+.kpi{border-radius:22px;padding:1.5rem;background:var(--bg);border:1px solid var(--line)}
+.kpi b{display:block;font-family:var(--display);font-weight:800;font-size:clamp(2.4rem,5vw,3.4rem);line-height:1;letter-spacing:-.03em}
+.kpi:nth-child(2) b{color:var(--cobalt)}
+.kpi span{display:block;color:var(--muted);margin-top:.6rem;font-size:.98rem}
+.charts{display:grid;grid-template-columns:1fr 1fr;gap:2rem}
+@media (max-width:56rem){.charts{grid-template-columns:1fr}}
+.chart h3{font-size:1.15rem;font-weight:700;margin-bottom:.15rem}
+.chart .sub{color:var(--muted);font-size:.9rem;margin:0 0 1rem}
+.row{display:grid;grid-template-columns:6.2rem 1fr 3.4rem;align-items:center;gap:.75rem;margin:.5rem 0;font-size:.95rem}
+.row .n{font-weight:500}
+.row .t{height:12px;border-radius:99px;background:#E7ECF5;overflow:hidden}
+.row .t i{display:block;height:100%;border-radius:99px;background:#B5C0D8}
+.row .v{text-align:right;font-variant-numeric:tabular-nums;color:var(--muted)}
+.row.us .n,.row.us .v{font-weight:700;color:var(--ink)}
+.row.us .t i{background:linear-gradient(90deg,var(--cobalt),var(--mint))}
+.tablewrap{overflow-x:auto;margin:2.5rem 0 .75rem;border:1px solid var(--line);border-radius:18px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:40rem;font-size:.97rem}
+caption{text-align:left;font-family:var(--display);font-weight:700;font-size:1.1rem;padding:1.1rem 1.1rem .5rem}
+th,td{padding:.7rem 1.1rem;text-align:right;border-top:1px solid var(--line);white-space:nowrap}
+th:first-child,td:first-child{text-align:left;white-space:normal}
+thead th{font-weight:600;color:var(--muted);font-size:.9rem}
+td.us,th.us{background:#EEF2FF;font-weight:700;color:var(--ink)}
+.note{color:var(--muted);font-size:.92rem;max-width:46rem}
+.memo{margin-top:2.25rem;border-radius:22px;padding:1.6rem;background:var(--night);color:#fff;display:grid;grid-template-columns:auto 1fr;gap:1.25rem;align-items:center}
+.memo b{font-family:var(--display);font-size:clamp(2.2rem,5vw,3.2rem);font-weight:800;line-height:1;color:var(--sun)}
+.memo p{margin:0;color:#C7D1E6}
+@media (max-width:40rem){.memo{grid-template-columns:1fr}}
+
+/* editor */
+.checks{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(19rem,1fr));gap:.75rem}
+.checks li{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:.95rem 1.1rem .95rem 2.9rem;position:relative;font-size:1rem}
+.checks li::before{content:"";position:absolute;left:1.05rem;top:1.15rem;width:.9rem;height:.9rem;border-radius:50%;border:2.5px solid var(--cobalt)}
+
+/* roadmap */
+.road{display:grid;gap:.75rem}
+.road .r{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:1rem 1.25rem}
+.chips{display:flex;gap:.4rem;flex-wrap:wrap}
+.chips span{background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:.2rem .8rem;font-size:.95rem;font-weight:500}
+.status{font-size:.88rem;font-weight:600;border-radius:999px;padding:.25rem .8rem;background:#EEF1F7;color:var(--muted)}
+.status.live{background:#DDF8F1;color:#0B7A62}
+.status.train{background:#FFF1CF;color:#8A5A00}
+
+/* footer */
+footer{padding:0 0 3rem}
+.foot{background:var(--night);color:#fff;border-radius:32px;padding:clamp(2rem,5vw,4rem);background-image:radial-gradient(40rem 20rem at 100% 0%,rgba(53,86,255,.4),transparent 60%)}
+.foot h2{font-size:clamp(1.9rem,4vw,3rem);font-weight:800;max-width:16ch;line-height:1.05}
+.foot p{color:#C7D1E6;max-width:36rem;margin:1rem 0 0}
+.contacts{display:grid;grid-template-columns:repeat(auto-fit,minmax(17rem,1fr));gap:1rem;margin-top:2rem}
+.contacts div{border:1px solid rgba(255,255,255,.16);border-radius:18px;padding:1.1rem 1.25rem}
+.contacts h3{font-size:.98rem;font-weight:500;color:#93A2C2;margin-bottom:.2rem;letter-spacing:0}
+.contacts a{color:#fff;font-family:var(--display);font-weight:700;font-size:1.2rem;text-decoration:none}
+.contacts a:hover{color:var(--mint)}
+.foot small{display:block;margin-top:2rem;color:#93A2C2}
+
+@media (prefers-reduced-motion:no-preference){
+  .hero h1,.hero .lede,.cta{animation:rise .8s cubic-bezier(.2,.8,.2,1) both}
+  .hero .lede{animation-delay:.08s}.cta{animation-delay:.16s}
+  @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="#top"><i aria-hidden="true"></i>Marito <span>by Ithobekile</span></a>
+    <nav class="main" aria-label="Main">
+      <a href="#how">How it works</a>
+      <a href="#results">Results</a>
+      <a href="#editor">For editors</a>
+      <a href="#roadmap">Languages</a>
+      <a class="pill" href="mailto:admin@ithobekile.io?subject=Marito%20trial%20request">Request a trial</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <div class="hero" id="top">
+    <div class="wrap">
+      <div class="hero-panel">
+        <div>
+          <h1>Translation into South African languages, ready for the proofreader.</h1>
+          <p class="lede">Marito translates textbooks, workbooks, exam papers and memoranda, curriculum documents and public information. It reasons about the source, translates, then post-edits its own draft before a language editor takes over.</p>
+          <div class="cta">
+            <a class="btn primary" href="mailto:admin@ithobekile.io?subject=Marito%20trial%20request">Request a trial</a>
+            <a class="btn line" href="#results">See the results</a>
+          </div>
+          <p class="also">Any direction among Sepedi, Sesotho, Setswana, Tshivenḓa, Xitsonga and English.</p>
+        </div>
+
+        <div class="picker">
+          <ul class="tabs" role="tablist" aria-label="Choose a language">
+            <li role="presentation"><button role="tab" id="tab-0" aria-selected="true" aria-controls="lang-panel" data-i="0">Sepedi</button></li>
+            <li role="presentation"><button role="tab" id="tab-1" aria-selected="false" aria-controls="lang-panel" data-i="1" tabindex="-1">Sesotho</button></li>
+            <li role="presentation"><button role="tab" id="tab-2" aria-selected="false" aria-controls="lang-panel" data-i="2" tabindex="-1">Setswana</button></li>
+            <li role="presentation"><button role="tab" id="tab-3" aria-selected="false" aria-controls="lang-panel" data-i="3" tabindex="-1">Tshivenḓa</button></li>
+            <li role="presentation"><button role="tab" id="tab-4" aria-selected="false" aria-controls="lang-panel" data-i="4" tabindex="-1">Xitsonga</button></li>
+          </ul>
+          <div id="lang-panel" role="tabpanel" aria-labelledby="tab-0" aria-live="polite">
+            <div class="panel-head"><h2 id="lp-name">Sepedi</h2><code id="lp-id">marito-sepedi-pro-1.0</code></div>
+            <dl style="margin:0">
+              <div class="stat"><dt>Names kept</dt><dd id="s-names"></dd><div class="bar"><b id="b-names"></b></div></div>
+              <div class="stat"><dt>Numbers kept</dt><dd id="s-numbers"></dd><div class="bar"><b id="b-numbers"></b></div></div>
+              <div class="stat"><dt>Layout kept</dt><dd id="s-layout"></dd><div class="bar"><b id="b-layout"></b></div></div>
+              <div class="stat"><dt>Correct curriculum term</dt><dd id="s-term"></dd><div class="bar"><b id="b-term"></b></div></div>
+              <div class="stat"><dt>Spelling errors per 1,000 words</dt><dd id="s-spell"></dd></div>
+              <div class="stat"><dt>Words from another language</dt><dd id="s-other"></dd></div>
+            </dl>
+            <p class="pp-note">English into each language, 300 passages per language. On a full 28-page examination memorandum, <strong id="s-pass"></strong> of sentences passed with proofreading only.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section id="how">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Built for formal published text</h2>
+        <p>Marito is made for learning materials, examinations, curriculum documents, notices, forms and public information. It follows the Departmental standard for spelling and curriculum terminology, using the Marito Dictionaries.</p>
+      </div>
+      <div class="bento">
+        <div class="tile t-a"><h3>Layout stays put</h3><p>Send text or Markdown, from one sentence to a whole document. Layout, numbering and figures are kept in place.</p></div>
+        <div class="tile t-b"><h3>Your glossary wins</h3><p>Terms you supply override the model's own, so a long document uses the same word every time.</p></div>
+        <div class="tile t-c"><h3>Weekly updates</h3><p>Corrections from users go into the model every week. You can ask for a fixed version if you need one.</p></div>
+        <div class="tile t-d"><h3>Made for editors, not instead of them</h3><p>Marito gets the draft most of the way. A language editor proofreads it, and what the editor changes feeds the next update.</p></div>
+      </div>
+      <ol class="flow" aria-label="Workflow">
+        <li><h3>Marito Pro translates</h3><p>It reasons about the source, translates, then post-edits its own draft against the source.</p></li>
+        <li><h3>A language editor proofreads</h3><p>The editor checks the draft against the points listed below.</p></li>
+        <li><h3>Corrections flow back</h3><p>Every correction sent back goes into the next weekly update.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="results" class="results">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Tested on passages the models never saw in training</h2>
+        <p>First-language reviewers scored spelling, terminology and borrowed words blind. The figures were measured on the translation before the post-editing pass, so they are a floor for Marito Pro.</p>
+      </div>
+
+      <div class="kpis">
+        <div class="kpi"><b>2.0</b><span>spelling errors per 1,000 words, against 15.4 to 30.1 for the other systems</span></div>
+        <div class="kpi"><b>93.7%</b><span>correct curriculum terms, against 59.3% to 72.6%</span></div>
+        <div class="kpi"><b>0.0%</b><span>words from another language, and no English left untranslated</span></div>
+      </div>
+
+      <div class="charts">
+        <div class="chart">
+          <h3>Correct curriculum term</h3>
+          <p class="sub">Higher is better</p>
+          <div class="row us"><span class="n">Marito</span><span class="t"><i style="width:93.7%"></i></span><span class="v">93.7%</span></div>
+          <div class="row"><span class="n">Fable</span><span class="t"><i style="width:72.6%"></i></span><span class="v">72.6%</span></div>
+          <div class="row"><span class="n">Gemini 3.8</span><span class="t"><i style="width:70.1%"></i></span><span class="v">70.1%</span></div>
+          <div class="row"><span class="n">Astra</span><span class="t"><i style="width:66.9%"></i></span><span class="v">66.9%</span></div>
+          <div class="row"><span class="n">Google</span><span class="t"><i style="width:59.3%"></i></span><span class="v">59.3%</span></div>
+        </div>
+        <div class="chart">
+          <h3>Spelling errors per 1,000 words</h3>
+          <p class="sub">Lower is better</p>
+          <div class="row us"><span class="n">Marito</span><span class="t"><i style="width:6.6%"></i></span><span class="v">2.0</span></div>
+          <div class="row"><span class="n">Fable</span><span class="t"><i style="width:51.2%"></i></span><span class="v">15.4</span></div>
+          <div class="row"><span class="n">Gemini 3.8</span><span class="t"><i style="width:60.5%"></i></span><span class="v">18.2</span></div>
+          <div class="row"><span class="n">Astra</span><span class="t"><i style="width:68.8%"></i></span><span class="v">20.7</span></div>
+          <div class="row"><span class="n">Google</span><span class="t"><i style="width:100%"></i></span><span class="v">30.1</span></div>
+        </div>
+      </div>
+
+      <div class="tablewrap">
+        <table>
+          <caption>All measures, averaged over the five languages</caption>
+          <thead>
+            <tr><th scope="col">Measure</th><th scope="col" class="us">Marito</th><th scope="col">Google</th><th scope="col">Gemini 3.8</th><th scope="col">Fable</th><th scope="col">Astra</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Spelling errors per 1,000 words</th><td class="us">2.0</td><td>30.1</td><td>18.2</td><td>15.4</td><td>20.7</td></tr>
+            <tr><th scope="row">Correct curriculum term</th><td class="us">93.7%</td><td>59.3%</td><td>70.1%</td><td>72.6%</td><td>66.9%</td></tr>
+            <tr><th scope="row">Words from another language</th><td class="us">0.0%</td><td>6.3%</td><td>3.9%</td><td>3.0%</td><td>4.7%</td></tr>
+            <tr><th scope="row">English left untranslated</th><td class="us">0.0%</td><td>9.0%</td><td>5.5%</td><td>4.4%</td><td>6.6%</td></tr>
+            <tr><th scope="row">Names kept</th><td class="us">98.4%</td><td>82.0%</td><td>89.1%</td><td>90.8%</td><td>87.4%</td></tr>
+            <tr><th scope="row">Numbers kept</th><td class="us">99.9%</td><td>93.9%</td><td>95.6%</td><td>96.9%</td><td>95.0%</td></tr>
+            <tr><th scope="row">Layout kept</th><td class="us">99.9%</td><td>84.6%</td><td>91.8%</td><td>93.2%</td><td>90.4%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">Same unseen passages for every system, tested 1 to 10 September 2026. The full comparison, including a similarity score against the language teams' publication-standard translations for each language, is in the system card.</p>
+
+      <div class="memo">
+        <b>85 to 91%</b>
+        <p>of sentences in a complete 28-page examination memorandum were accepted by a language editor with proofreading only, depending on the language. Layout was kept in 99.3% to 100% of cases.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="editor">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>What a language editor should check</h2>
+        <p>Formal text is the models' strength, so check informal passages more closely. These are the points the system card asks editors to look at.</p>
+      </div>
+      <ul class="checks">
+        <li>Names that are also words, and abbreviations replaced by descriptions.</li>
+        <li>Terms that drift across a long document. Use a glossary.</li>
+        <li>The wrong sense of a word with several meanings.</li>
+        <li>Agreement across long sentences.</li>
+        <li>Paired words collapsed, such as "panic and fear" becoming "fear and fear".</li>
+        <li>Familiar patterns over-applied, such as "29 questions" becoming "29 pages".</li>
+        <li>Renumbered or shortened lists in dense memoranda.</li>
+        <li>English terms left in place.</li>
+        <li>Stray characters from another script, which are rare.</li>
+        <li>Register, especially in informal text.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="roadmap" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Phase 1 is released. More languages are on the way.</h2>
+      </div>
+      <div class="road">
+        <div class="r"><div class="chips"><span>Sepedi</span><span>Sesotho</span><span>Setswana</span><span>Tshivenḓa</span><span>Xitsonga</span></div><span class="status live">Released (Phase 1)</span></div>
+        <div class="r"><div class="chips"><span>isiZulu</span><span>isiXhosa</span><span>Siswati</span><span>isiNdebele</span><span>Afrikaans</span></div><span class="status train">In training</span></div>
+        <div class="r"><div class="chips"><span>Sesotho (Lesotho)</span></div><span class="status">In preparation</span></div>
+        <div class="r"><div class="chips"><span>Kiswahili</span><span>Shona</span><span>Lingala</span><span>Luganda</span></div><span class="status">In preparation</span></div>
+        <div class="r"><div class="chips"><span>Hausa</span><span>Yoruba</span><span>Igbo</span></div><span class="status">In preparation</span></div>
+        <div class="r"><div class="chips"><span>Amharic</span><span>Oromo</span><span>Somali</span></div><span class="status">In preparation</span></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="foot">
+      <h2>Talk to us about Marito</h2>
+      <p>Ask about access, trials and translation work, or send a question about the system card.</p>
+      <div class="contacts">
+        <div><h3>Access, trials and translation work</h3><a href="mailto:admin@ithobekile.io">admin@ithobekile.io</a></div>
+        <div><h3>Questions about the system card</h3><a href="mailto:lindo@ithobekile.io">lindo@ithobekile.io</a></div>
+      </div>
+      <small>Marito Translation Models system card, version 1.0, 5 October 2026. The Marito Project, Ithobekile (Pty) Ltd.</small>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var L=[
+    {n:"Sepedi",id:"marito-sepedi-pro-1.0",names:98.7,nums:99.9,lay:100,term:94.2,spell:1.8,other:0.0,pass:89},
+    {n:"Sesotho",id:"marito-sesotho-pro-1.0",names:97.6,nums:99.8,lay:99.6,term:91.9,spell:2.7,other:0.0,pass:85},
+    {n:"Setswana",id:"marito-setswana-pro-1.0",names:98.1,nums:99.9,lay:100,term:92.8,spell:2.3,other:0.0,pass:87},
+    {n:"Tshivenḓa",id:"marito-tshivenda-pro-1.0",names:99.0,nums:99.9,lay:100,term:95.1,spell:1.5,other:0.0,pass:91},
+    {n:"Xitsonga",id:"marito-xitsonga-pro-1.0",names:98.8,nums:99.9,lay:100,term:94.6,spell:1.7,other:0.0,pass:90}
+  ];
+  var tabs=[].slice.call(document.querySelectorAll('.tabs [role=tab]'));
+  var panel=document.getElementById('lang-panel');
+  function pct(v){return v.toFixed(1)+"%"}
+  function set(id,v){document.getElementById(id).textContent=v}
+  function bar(id,v){document.getElementById(id).style.width=v+"%"}
+  function show(i){
+    var d=L[i];
+    tabs.forEach(function(t,k){t.setAttribute('aria-selected',k===i?'true':'false');t.tabIndex=k===i?0:-1});
+    panel.setAttribute('aria-labelledby','tab-'+i);
+    set('lp-name',d.n);set('lp-id',d.id);
+    set('s-names',pct(d.names));set('s-numbers',pct(d.nums));set('s-layout',pct(d.lay));set('s-term',pct(d.term));
+    set('s-spell',d.spell.toFixed(1));set('s-other',pct(d.other));set('s-pass',d.pass+"%");
+    bar('b-names',d.names);bar('b-numbers',d.nums);bar('b-layout',d.lay);bar('b-term',d.term);
+  }
+  tabs.forEach(function(t,i){
+    t.addEventListener('click',function(){show(i)});
+    t.addEventListener('keydown',function(e){
+      var k=-1;
+      if(e.key==='ArrowRight')k=(i+1)%tabs.length;
+      if(e.key==='ArrowLeft')k=(i+tabs.length-1)%tabs.length;
+      if(k>-1){e.preventDefault();show(k);tabs[k].focus()}
+    });
+  });
+  requestAnimationFrame(function(){show(0)});
+})();
+</script>
+</body>
+</html>
